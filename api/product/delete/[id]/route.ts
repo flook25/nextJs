@@ -6,16 +6,16 @@ const prisma = new PrismaClient();
 
 
 export async function DELETE(req: NextRequest, {params}: {
-    params : {
+    params :Promise<{
         id :string
-    }
+    }>
 }) {
     try {
         
-        const id  = parseInt(params.id)
+        const {id}  = await params
         await prisma.product.delete({
             where: {
-                id:id
+                id: parseInt(id)
             }
         });
 
